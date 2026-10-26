@@ -1,0 +1,22 @@
+# Example file: adjust before using it on the server.
+[Unit]
+Description=TBXM
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/tbxm/server
+Environment=TBXM_HOST=0.0.0.0
+Environment=TBXM_PORT=8080
+Environment=TBXM_ROOT=/var/www/tbxm
+User=www-data
+Group=www-data
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

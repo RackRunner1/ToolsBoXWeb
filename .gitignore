@@ -1,0 +1,10 @@
+# Build output
+/server
+/dist
+*.exe
+*.test
+
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store
