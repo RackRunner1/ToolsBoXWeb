@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 )
@@ -16,6 +17,18 @@ func getenv(key, def string) string {
 		return v
 	}
 	return def
+}
+
+func hideGit(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		for _, segment := range strings.Split(r.URL.Path, "/") {
+			if segment == ".git" {
+				http.NotFound(w, r)
+				return
+			}
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 func main() {
@@ -30,7 +43,7 @@ func main() {
 
 	srv := &http.Server{
 		Addr:              net.JoinHostPort(host, port),
-		Handler:           http.FileServer(http.Dir(root)),
+		Handler:           hideGit(http.FileServer(http.Dir(root))),
 		ReadHeaderTimeout: 10 * time.Second,
 		ReadTimeout:       30 * time.Second,
 		WriteTimeout:      60 * time.Second,
