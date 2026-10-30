@@ -34,6 +34,19 @@ func hideGit(next http.Handler) http.Handler {
 	})
 }
 
+func hideEnv(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		for _, segment := range strings.Split(r.URL.Path, "/") {
+			name := strings.ToLower(strings.TrimLeft(segment, "."))
+			if name == "env" || strings.HasPrefix(name, "env.") || strings.HasPrefix(name, "env-") || strings.HasPrefix(name, "env_") {
+				http.NotFound(w, r)
+				return
+			}
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func cleanURLs(root string, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		p := r.URL.Path
@@ -81,7 +94,7 @@ func main() {
 
 	srv := &http.Server{
 		Addr:              net.JoinHostPort(host, port),
-		Handler:           hideGit(cleanURLs(root, http.FileServer(http.Dir(root)))),
+		Handler:           hideEnv(hideGit(cleanURLs(root, http.FileServer(http.Dir(root))))),
 		ReadHeaderTimeout: 10 * time.Second,
 		ReadTimeout:       30 * time.Second,
 		WriteTimeout:      60 * time.Second,
