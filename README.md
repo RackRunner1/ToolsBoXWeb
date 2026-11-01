@@ -1,4 +1,8 @@
-# TBXM static web server
+# ToolsBoXWeb
+
+A project by the ToolsBoXCompany.
+
+---
 
 A small Go HTTP server for serving a static website. It supports extensionless
 URLs for `.html` files, redirects `.html` URLs to clean URLs, hides `.git` and
