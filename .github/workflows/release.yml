@@ -17,9 +17,16 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
+          cache: true
+
+      - name: Test
+        run: go test ./...
+
+      - name: Vet
+        run: go vet ./...
 
       - name: Build
-        run: CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o server .
+        run: CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o server ./cmd/tbxm
 
       - name: Compute tag
         id: tag
