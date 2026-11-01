@@ -1,4 +1,4 @@
-name: Release
+name: Create Release
 
 on:
   workflow_dispatch:
@@ -6,12 +6,19 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -28,16 +35,24 @@ jobs:
       - name: Build
         run: CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o server ./cmd/tbxm
 
-      - name: Compute tag
-        id: tag
-        run: echo "tag=$(date -u +%Y.%m.%d)" >> "$GITHUB_OUTPUT"
+      - name: Generate release tag
+        id: release
+        run: bash .github/scripts/compute-release-tag.sh
 
-      - name: Create release
+      - name: Generate changelog
+        id: notes
         env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.tag.outputs.tag }}
-        run: |
-          gh release create "$TAG" server \
-            --target "$GITHUB_SHA" \
-            --title "$TAG" \
-            --generate-notes
+          RELEASE_NAME: ${{ steps.release.outputs.release_name }}
+          LAST_TAG: ${{ steps.release.outputs.last_tag }}
+        run: bash .github/scripts/generate-release-notes.sh
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag }}
+          name: ${{ steps.release.outputs.release_name }}
+          body: ${{ steps.notes.outputs.body }}
+          make_latest: true
+          generate_release_notes: false
+          fail_on_unmatched_files: true
+          files: server

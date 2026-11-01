@@ -50,7 +50,10 @@ go build ./cmd/tbxm
 ```
 
 The CI workflow runs tests and `go vet` for pushes and pull requests. Releases
-are built manually through the GitHub Actions workflow dispatch interface.
+are built manually through the GitHub Actions workflow dispatch interface. Each
+release receives a UTC `YYYY.MM.DD` tag and a categorized changelog generated
+from commits since the previous tag. Only one release can be published per UTC
+day because the date is the complete tag.
 
 ## Source layout
 
