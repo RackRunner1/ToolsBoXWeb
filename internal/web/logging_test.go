@@ -12,7 +12,7 @@ func TestRequestsAreNotLogged(t *testing.T) {
 	slog.SetDefault(slog.New(slog.NewTextHandler(&logs, nil)))
 	t.Cleanup(func() { slog.SetDefault(previous) })
 
-	handler := NewHandler(makeSite(t))
+	handler := NewHandler(testConfig(t))
 	for _, target := range []string{"/", "/missing", "/.env", "/assets/site.css"} {
 		request(t, handler, target)
 	}

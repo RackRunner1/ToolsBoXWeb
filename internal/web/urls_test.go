@@ -7,7 +7,7 @@ import (
 )
 
 func TestCleanURLsServeAndRedirect(t *testing.T) {
-	handler := NewHandler(makeSite(t))
+	handler := NewHandler(testConfig(t))
 
 	for _, tc := range []struct {
 		name string

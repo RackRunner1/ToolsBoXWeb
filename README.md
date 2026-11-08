@@ -21,9 +21,16 @@ Configuration:
 | `TBXM_HOST` | `0.0.0.0` | Address to bind to |
 | `TBXM_PORT` | `8080` | TCP port |
 | `TBXM_ROOT` | `/var/www/tbxm` | Existing directory containing the site |
+| `TBXM_ALLOW_WELL_KNOWN` | `true` | Serve `/.well-known/` paths |
+| `TBXM_ALLOW_DOTFILES` | empty | Comma-separated dot-prefixed names to serve, e.g. `.nojekyll,.htaccess` |
 
 Place an `index.html` in each directory intended to be served. Directories
 without one return 404 rather than exposing a file listing.
+
+Any path segment starting with a `.` returns 404, except names listed in
+`TBXM_ALLOW_DOTFILES` and `.well-known` (unless disabled). `.git` and `.env`
+files are always blocked, even if listed. Only `GET` and `HEAD` are accepted;
+other methods return 405.
 
 ## Caching and HTTPS
 

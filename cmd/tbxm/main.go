@@ -12,7 +12,7 @@ import (
 func main() {
 	cfg, err := config.Load()
 	if err == nil {
-		err = server.Run(cfg, web.NewHandler(cfg.Root))
+		err = server.Run(cfg, web.NewHandler(cfg))
 	}
 	if err != nil {
 		slog.Error("server stopped", "error", err)
