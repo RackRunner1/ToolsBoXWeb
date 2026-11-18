@@ -27,6 +27,10 @@ Configuration:
 Place an `index.html` in each directory intended to be served. Directories
 without one return 404 rather than exposing a file listing.
 
+Missing pages return a `404 Not Found` status and keep the requested URL (no
+redirect). The page shown is `404.html` at the site root if it exists, otherwise
+a built-in default page.
+
 Any path segment starting with a `.` returns 404, except names listed in
 `TBXM_ALLOW_DOTFILES` and `.well-known` (unless disabled). `.git` and `.env`
 files are always blocked, even if listed. Only `GET` and `HEAD` are accepted;

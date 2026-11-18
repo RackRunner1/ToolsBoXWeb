@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#09090d">
+
+    <title>404 — Page not found</title>
+
+    <style>
+        :root {
+            --background: #09090d;
+            --foreground: #f5f5f7;
+            --muted: #858591;
+            --border: rgba(255,255,255,.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background: var(--background);
+            color: var(--foreground);
+            font-family: Inter, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        main {
+            flex: 1;
+            min-height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(45px, 9vh, 100px) 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* 404 */
+
+        .error-code {
+            position: relative;
+            isolation: isolate;
+            display: inline-block;
+
+            font-size: clamp(110px, 20vw, 190px);
+            line-height: .95;
+            font-weight: 750;
+            letter-spacing: -.075em;
+
+            background: linear-gradient(
+                180deg,
+                #ffffff 5%,
+                #c5bdf0 55%,
+                #796bb4 100%
+            );
+
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .error-code::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: 15% -20% 0;
+            background: #7864ff;
+            filter: blur(75px);
+            opacity: .20;
+            pointer-events: none;
+        }
+
+        /* TEXT */
+
+        h1 {
+            margin-top: clamp(25px, 4vh, 35px);
+            font-size: clamp(25px, 4vw, 38px);
+            font-weight: 600;
+            letter-spacing: -1.5px;
+        }
+
+        .description {
+            width: 100%;
+            max-width: 420px;
+            margin: 17px auto 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        /* URL */
+
+        .requested-url {
+            display: inline-block;
+            max-width: min(100%, 500px);
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            margin-top: 30px;
+            padding: 12px 17px;
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            background: rgba(255,255,255,.025);
+            color: #aaa2d5;
+
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            flex-shrink: 0;
+            padding: 25px 20px;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            color: #686875;
+            font-size: 11px;
+            letter-spacing: .3px;
+        }
+
+        footer a {
+            color: #a79bff;
+            text-decoration: none;
+            transition: color .2s ease;
+        }
+
+        footer a:hover {
+            color: #c5bcff;
+            text-decoration: underline;
+        }
+
+        /* TABLETS */
+
+        @media (max-width: 768px) {
+            main {
+                padding: 65px 30px;
+            }
+
+            .container {
+                max-width: 520px;
+            }
+
+            .description {
+                max-width: 390px;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 480px) {
+            main {
+                min-height: 0;
+                padding: 65px 22px;
+            }
+
+            .error-code {
+                font-size: clamp(105px, 29vw, 140px);
+                letter-spacing: -.08em;
+            }
+
+            .error-code::before {
+                filter: blur(55px);
+                opacity: .18;
+            }
+
+            h1 {
+                margin-top: 25px;
+                font-size: 27px;
+                letter-spacing: -1px;
+            }
+
+            .description {
+                margin-top: 13px;
+                font-size: 13px;
+                line-height: 1.8;
+            }
+
+            .requested-url {
+                width: 100%;
+                margin-top: 24px;
+                padding: 11px 13px;
+                font-size: 11px;
+            }
+
+            footer {
+                padding: 21px 15px;
+                font-size: 10px;
+            }
+        }
+
+        /* VERY SMALL SCREENS */
+
+        @media (max-width: 350px) {
+            main {
+                padding: 45px 16px;
+            }
+
+            .error-code {
+                font-size: 100px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .description {
+                font-size: 12px;
+            }
+        }
+
+        /* SHORT SCREENS */
+
+        @media (max-height: 650px) and (min-width: 481px) {
+            main {
+                padding-top: 35px;
+                padding-bottom: 35px;
+            }
+
+            .error-code {
+                font-size: 115px;
+            }
+
+            h1 {
+                margin-top: 20px;
+            }
+
+            .requested-url {
+                margin-top: 18px;
+            }
+        }
+
+        /* ACCESSIBILITY */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <div class="container">
+
+            <div class="error-code">404</div>
+
+            <h1>Oops! Page not found.</h1>
+
+            <p class="description">
+                The page you're looking for doesn't exist,
+                has been moved, or is no longer available.
+                Check the URL and try again.
+            </p>
+
+            <div class="requested-url" id="requested-url">/</div>
+
+        </div>
+    </main>
+
+    <footer>
+        Served with
+        <a href="https://github.com/RackRunner1/ToolsBoXWeb"
+           target="_blank"
+           rel="noopener noreferrer">ToolsBoXWeb</a>
+    </footer>
+
+    <script>
+        document.getElementById("requested-url").textContent =
+            window.location.pathname + window.location.search;
+    </script>
+
+</body>
+</html>
