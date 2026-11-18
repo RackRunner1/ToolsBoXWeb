@@ -11,6 +11,7 @@ Environment=TBXM_PORT=8080
 Environment=TBXM_ROOT=/var/www/tbxm
 Environment=TBXM_ALLOW_WELL_KNOWN=true
 Environment=TBXM_ALLOW_DOTFILES=
+Environment=TBXM_COMPRESSION=true
 User=www-data
 Group=www-data
 Restart=on-failure

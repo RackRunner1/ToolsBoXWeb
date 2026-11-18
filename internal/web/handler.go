@@ -5,6 +5,7 @@ import (
 
 	"tbxm/internal/config"
 	"tbxm/internal/web/cache"
+	"tbxm/internal/web/compress"
 	"tbxm/internal/web/files"
 	"tbxm/internal/web/security"
 	"tbxm/internal/web/urls"
@@ -19,6 +20,9 @@ func NewHandler(cfg config.Config) http.Handler {
 
 	handler := files.NewHandler(cfg.Root)
 	handler = cache.Middleware(handler)
+	if cfg.Compression {
+		handler = compress.Gzip(handler)
+	}
 	handler = urls.Clean(cfg.Root, handler)
 	handler = security.HideDotfiles(handler, allowedDotfiles)
 	handler = security.HideEnv(handler)

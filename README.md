@@ -23,6 +23,7 @@ Configuration:
 | `TBXM_ROOT` | `/var/www/tbxm` | Existing directory containing the site |
 | `TBXM_ALLOW_WELL_KNOWN` | `true` | Serve `/.well-known/` paths |
 | `TBXM_ALLOW_DOTFILES` | empty | Comma-separated dot-prefixed names to serve, e.g. `.nojekyll,.htaccess` |
+| `TBXM_COMPRESSION` | `true` | Gzip text responses (HTML, CSS, JavaScript, JSON, SVG) for clients that accept it |
 
 Place an `index.html` in each directory intended to be served. Directories
 without one return 404 rather than exposing a file listing.

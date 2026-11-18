@@ -18,6 +18,9 @@ type Config struct {
 	AllowWellKnown bool
 	// AllowDotfiles lists additional dot-prefixed names to serve, such as ".nojekyll".
 	AllowDotfiles []string
+
+	// Compression enables gzip compression of text responses when true.
+	Compression bool
 }
 
 // Load reads configuration from the environment and validates the site root.
@@ -38,6 +41,10 @@ func Load() (Config, error) {
 		return Config{}, err
 	}
 	cfg.AllowDotfiles, err = dotfilesFromEnv("TBXM_ALLOW_DOTFILES")
+	if err != nil {
+		return Config{}, err
+	}
+	cfg.Compression, err = boolOrDefault("TBXM_COMPRESSION", true)
 	if err != nil {
 		return Config{}, err
 	}
