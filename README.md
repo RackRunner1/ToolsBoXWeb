@@ -8,6 +8,27 @@ A small Go HTTP server for serving a static website. It supports extensionless
 URLs for `.html` files, redirects `.html` URLs to clean URLs, hides `.git` and
 `.env` paths, and does not list directory contents.
 
+## Scope and production use
+
+ToolsBoXWeb is useful for testing a site or project. It is intentionally very
+limited in features to stay fast and simple.
+
+For production use, it is recommended to:
+
+- bind the server to `127.0.0.1` on a port other than 80 or 443 (the
+  `tbxm.service` file uses `127.0.0.1:8080`);
+- put [Caddy](https://caddyserver.com) in front as a reverse proxy to
+  `127.0.0.1:8080`, to handle HTTPS, the HTTP-to-HTTPS redirect, and HSTS.
+
+Example `Caddyfile`:
+
+```
+tondomaine.fr {
+    reverse_proxy 127.0.0.1:8080
+    header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+}
+```
+
 ## Run
 
 ```sh
